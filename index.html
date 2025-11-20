@@ -7,7 +7,6 @@
   <style>
     :root {
       --bg: #020617;
-      --card: #020617;
       --accent: #fbbf24;
       --muted: #cbd5e1;
     }
@@ -58,31 +57,35 @@
       .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     .card {
-      background: radial-gradient(circle at top left, rgba(248,250,252,0.06), transparent 55%), linear-gradient(180deg, rgba(15,23,42,0.9), rgba(15,23,42,0.7));
-      border: 1px solid rgba(148,163,184,0.35);
-      padding: 13px;
-      border-radius: 14px;
-      min-height: 96px;
       position: relative;
       overflow: hidden;
+      padding: 14px;
+      border-radius: 16px;
+      min-height: 110px;
       cursor: pointer;
-      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+      border: 1px solid rgba(148,163,184,0.35);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(251,191,36,0.22), transparent 55%),
+        radial-gradient(circle at 100% 120%, rgba(94,234,212,0.16), rgba(15,23,42,0.96));
+      box-shadow: 0 12px 30px rgba(15,23,42,0.85);
+      transition: transform 130ms ease, box-shadow 130ms ease, border-color 130ms ease;
     }
     .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 28px rgba(15,23,42,0.8);
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(15,23,42,1);
       border-color: rgba(251,191,36,0.9);
     }
     .head {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
     .num {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: radial-gradient(circle at 20% 0%, #facc15 0, #78350f 45%, #020617 100%);
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 20% 0%, #facc15 0, #78350f 45%, #020617 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -90,31 +93,52 @@
       font-weight: 800;
       font-size: 18px;
       border: 1px solid rgba(248,250,252,0.75);
+      box-shadow: 0 0 16px rgba(250,204,21,0.5);
+      flex-shrink: 0;
     }
     .type {
       font-size: 11px;
       color: #e5e7eb;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.16em;
     }
     .short {
+      margin-top: 6px;
       font-size: 13px;
       color: #cbd5e1;
-      margin-top: 6px;
-      max-width: 82%;
+      max-width: 80%;
     }
-    .imgdecor {
+    .icon-orb {
       position: absolute;
-      right: -10px;
-      bottom: -18px;
-      width: 130px;
-      height: 130px;
+      right: -8px;
+      bottom: -12px;
+      width: 120px;
+      height: 120px;
       border-radius: 999px;
-      object-fit: cover;
-      filter: saturate(1.3) contrast(1.1) brightness(0.9);
-      opacity: 0.4;
-      mix-blend-mode: screen;
-      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      filter: drop-shadow(0 0 16px rgba(251,191,36,0.7));
+      opacity: 0.9;
+    }
+    .icon-orb span {
+      transform: translateY(-2px);
+    }
+    .orb-ritual {
+      background: radial-gradient(circle at 30% 10%, #facc15, #f97316 45%, transparent 75%);
+    }
+    .orb-afirmacion {
+      background: radial-gradient(circle at 20% 0%, #a855f7, #d946ef 45%, transparent 75%);
+    }
+    .orb-oraculo {
+      background: radial-gradient(circle at 10% 0%, #38bdf8, #6366f1 45%, transparent 75%);
+    }
+    .orb-manualidad {
+      background: radial-gradient(circle at 0% 10%, #22c55e, #16a34a 45%, transparent 75%);
+    }
+    .orb-audio {
+      background: radial-gradient(circle at 70% 0%, #f97316, #ec4899 45%, transparent 75%);
     }
     .done-badge {
       position: absolute;
@@ -126,6 +150,12 @@
       border-radius: 999px;
       padding: 2px 7px;
       border: 1px solid rgba(34,197,94,0.4);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .done-badge span {
+      font-size: 13px;
     }
     footer {
       color: #64748b;
@@ -136,7 +166,7 @@
     .modal-bg {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at top, rgba(15,23,42,0.95), rgba(15,23,42,0.98));
+      background: radial-gradient(circle at top, rgba(15,23,42,0.96), rgba(15,23,42,0.98));
       display: flex;
       align-items: center;
       justify-content: center;
@@ -146,26 +176,47 @@
     .modal {
       width: 100%;
       max-width: 880px;
-      background: radial-gradient(circle at top left, rgba(251,191,36,0.04), transparent 55%), #020617;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(251,191,36,0.08), transparent 55%),
+        radial-gradient(circle at 100% 120%, rgba(34,211,238,0.12), #020617);
       border: 1px solid rgba(148,163,184,0.5);
       padding: 20px 20px 18px;
-      border-radius: 16px;
+      border-radius: 20px;
       color: #e5e7eb;
       box-shadow: 0 32px 90px rgba(15,23,42,1);
       position: relative;
     }
     .modal .top {
       display: flex;
-      gap: 18px;
+      gap: 20px;
       flex-wrap: wrap;
     }
-    .modal img.main-image {
+    .modal-visual {
       width: 230px;
       height: 230px;
-      object-fit: cover;
-      border-radius: 14px;
+      border-radius: 18px;
       border: 1px solid rgba(148,163,184,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(251,191,36,0.35), transparent 52%),
+        radial-gradient(circle at 80% 120%, rgba(56,189,248,0.28), rgba(15,23,42,1));
+      box-shadow: 0 0 50px rgba(15,23,42,0.9);
       flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .modal-visual::before {
+      content: "";
+      position: absolute;
+      inset: 16%;
+      border-radius: 999px;
+      border: 1px dashed rgba(248,250,252,0.18);
+    }
+    .modal-visual span {
+      font-size: 72px;
+      filter: drop-shadow(0 0 18px rgba(251,191,36,0.8));
     }
     .modal h2 {
       color: #f9fafb;
@@ -239,36 +290,119 @@
 
   <script>
     const ITEMS = [
-      { id: 1,  title: "Ritual de Apertura — Día 1",   type: "Ritual",     short: "Encender la luz interior", body: "Enciende una vela blanca. Coloca tus manos sobre tu corazón y visualiza una estrella dorada dentro de ti activándose lentamente. Respira hondo y di: 'Doy la bienvenida a la luz en mi vida'.", image: "img/dia01.jpg" },
-      { id: 2,  title: "Afirmación de Protección — Día 2", type: "Afirmación", short: "Círculo protector", body: "Afirmación del día: 'Estoy rodeada de luz, magia y protección. Nada externo me desequilibra. Mi energía es sagrada'. Repítela al menos 3 veces durante el día.", image: "img/dia02.jpg" },
-      { id: 3,  title: "Mensaje de Oráculo — Día 3",  type: "Oráculo",    short: "La Estrella", body: "La energía de hoy es esperanza. Observa una estrella (real o en imagen) y pide una señal clara para este mes. Anota la primera idea, palabra o símbolo que te llegue. Ese será tu mensaje.", image: "img/dia03.jpg" },
-      { id: 4,  title: "Pequeño Hechizo — Día 4",     type: "Hechizo",    short: "Hechizo de calma", body: "Escribe en un papel aquello que te inquieta. Colócalo bajo un vaso de agua durante una hora. Después, tira el agua a la tierra o al fregadero, visualizando cómo se disuelve la preocupación.", image: "img/dia04.jpg" },
-      { id: 5,  title: "Manualidad — Día 5",          type: "Manualidad", short: "Amuleto de invierno", body: "Crea un pequeño saquito con tela. Introduce romero (limpieza), sal (protección) y un cuarzo blanco (claridad). Ciérralo con un lazo y llévalo contigo durante el mes de diciembre como talismán.", image: "img/dia05.jpg" },
-      { id: 6,  title: "Meditación — Día 6",          type: "Audio",      short: "Meditación breve", body: "Haz una pausa de 5 minutos. Respira profundamente 7 veces. En cada exhalación imagina cómo expulsas peso del pasado. Visualiza un suave humo gris saliendo de ti y transformándose en luz.", image: "img/dia06.jpg" },
-      { id: 7,  title: "Ritual — Día 7",              type: "Ritual",     short: "Ritual del incienso", body: "Enciende incienso de sándalo, pino o mirra. Observa el humo elevándose y visualiza cómo se lleva la energía densa de tu hogar. Recorre la casa con el incienso si puedes, en sentido de las agujas del reloj.", image: "img/dia07.jpg" },
-      { id: 8,  title: "Afirmación — Día 8",          type: "Afirmación", short: "Yo merezco", body: "Afirmación del día: 'Soy merecedora de oportunidades, abundancia y bienestar. Me abro a recibir con amor'. Escríbela en un papel y colócalo en un lugar visible.", image: "img/dia08.jpg" },
-      { id: 9,  title: "Oráculo — Día 9",             type: "Oráculo",    short: "Carta de intuición", body: "Imagina que recibes una carta mágica con un símbolo: luna, sol o estrella. Elige uno sin pensarlo mucho. Luna: escucha tus emociones. Sol: actúa con confianza. Estrella: confía en tu guía interna.", image: "img/dia09.jpg" },
-      { id: 10, title: "Hechizo — Día 10",            type: "Hechizo",    short: "Hechizo de paz", body: "Coloca sal marina en un cuenco pequeño. Pon tus manos encima y di: 'La paz me encuentra, me abraza y se queda'. Después, tira la sal por el fregadero con agua, visualizando calma entrando en tu vida.", image: "img/dia10.jpg" },
-      { id: 11, title: "Manualidad — Día 11",         type: "Manualidad", short: "Corona mística", body: "Haz una mini corona con ramitas, cuerda y si tienes, una hoja de laurel. Cuelga la corona en la entrada o cerca de una ventana para llamar a la buena suerte y la protección.", image: "img/dia11.jpg" },
-      { id: 12, title: "Audio — Día 12",              type: "Audio",      short: "Respiración lunar", body: "Practica la respiración 4–4–6: inhala contando 4, mantén el aire 4 segundos y exhala en 6, imaginando una luna plateada sobre ti que te llena de calma suave. Repite varias veces.", image: "img/dia12.jpg" },
-      { id: 13, title: "Ritual — Día 13",             type: "Ritual",     short: "Ritual del agua", body: "Llena un vaso con agua. Pon tus manos alrededor y transmite una intención clara: paz, salud, abundancia… Bebe el agua lentamente, sintiendo que esa energía entra en tu cuerpo.", image: "img/dia13.jpg" },
-      { id: 14, title: "Afirmación — Día 14",         type: "Afirmación", short: "Yo avanzo", body: "Afirmación del día: 'Me abro a nuevos ciclos con confianza. Avanzo, aunque sea paso a paso, hacia una vida más alineada conmigo'. Repítela cuando sientas dudas.", image: "img/dia14.jpg" },
-      { id: 15, title: "Oráculo — Día 15",            type: "Oráculo",    short: "Mensaje del espíritu del invierno", body: "Cierra los ojos y elige una palabra: calma, introspección, guía o renacimiento. La palabra que elijas es el consejo del invierno para ti hoy. Escríbela y manténla presente durante el día.", image: "img/dia15.jpg" },
-      { id: 16, title: "Hechizo — Día 16",            type: "Hechizo",    short: "Hechizo de gratitud", body: "Escribe 3 cosas que agradeces del año. Enróllalo y quémalo (siempre en un recipiente seguro) o guárdalo en un frasco. La gratitud multiplica la magia y abre espacio para nuevas bendiciones.", image: "img/dia16.jpg" },
-      { id: 17, title: "Manualidad — Día 17",         type: "Manualidad", short: "Botella de intenciones", body: "Llena una mini botella o frasquito con purpurina, pétalos secos y un papel con un deseo escrito muy breve. Ciérrala y colócala en tu altar o en tu mesilla como recordatorio de tu intención.", image: "img/dia17.jpg" },
-      { id: 18, title: "Audio — Día 18",              type: "Audio",      short: "Meditación de raíces", body: "Siéntate cómoda y visualiza raíces de luz que salen de tus pies y te conectan con la tierra. Siente la estabilidad y sostén bajo ti. Repite mentalmente: 'Estoy enraizada, segura y presente'.", image: "img/dia18.jpg" },
-      { id: 19, title: "Ritual — Día 19",             type: "Ritual",     short: "Ritual de claridad", body: "Enciende una vela y obsérvala en silencio unos minutos. Permite que tu mente muestre aquello que necesitas soltar o aclarar. Si te nace, escríbelo en un papel para trabajarlo más adelante.", image: "img/dia19.jpg" },
-      { id: 20, title: "Afirmación — Día 20",         type: "Afirmación", short: "Soy luz", body: "Afirmación del día: 'Mi energía ilumina cada espacio que habito. Soy luz, incluso en los días grises'. Repítela frente al espejo si te sientes cómoda.", image: "img/dia20.jpg" },
-      { id: 21, title: "Oráculo — Día 21",            type: "Oráculo",    short: "Solsticio", body: "Este día es un portal de renacer. Pregúntate: '¿Qué ciclo cierro hoy y cuál quiero abrir?'. Escribe una frase de cierre y una frase de apertura. Guárdalas en tu altar o lugar especial.", image: "img/dia21.jpg" },
-      { id: 22, title: "Hechizo — Día 22",            type: "Hechizo",    short: "Hechizo de abundancia", body: "Coloca una moneda limpia bajo una vela dorada o blanca. Di: 'La prosperidad fluye hacia mí de forma equilibrada y amorosa'. Deja la vela encendida un rato, siempre bajo supervisión.", image: "img/dia22.jpg" },
-      { id: 23, title: "Manualidad — Día 23",         type: "Manualidad", short: "Decoración lunar", body: "Recorta lunas en cartón o cartulina y píntalas en tonos plateados o blancos. Cuélgalas con hilo sobre una ventana o en un rincón especial. Cada luna representa un deseo para el próximo año.", image: "img/dia23.jpg" },
-      { id: 24, title: "Ritual de Cierre — Día 24",   type: "Ritual",     short: "Celebración y cierre", body: "Enciende varias velas (si puedes, en tonos blanco y dorado). Agradece en voz alta todo lo vivido este mes y este año. Escribe una intención para el nuevo ciclo y guárdala donde puedas leerla cuando lo necesites.", image: "img/dia24.jpg" }
+      { id: 1,  title: "Ritual de Apertura — Día 1",   type: "Ritual",     icon: "🕯️", orb: "ritual",
+        short: "Enciende la luz interior",
+        body: "Enciende una vela blanca. Coloca tus manos sobre tu corazón y visualiza una estrella dorada dentro de ti activándose poco a poco. Respira hondo y di: «Doy la bienvenida a la luz en mi vida»." },
+
+      { id: 2,  title: "Afirmación de Protección — Día 2", type: "Afirmación", icon: "🛡️", orb: "afirmacion",
+        short: "Crea tu círculo protector",
+        body: "Afirmación del día: «Estoy rodeada de luz, magia y protección. Nada externo me desequilibra. Mi energía es sagrada». Repítela al menos 3 veces durante el día." },
+
+      { id: 3,  title: "Mensaje de Oráculo — Día 3",  type: "Oráculo",    icon: "✨", orb: "oraculo",
+        short: "Conecta con la Estrella",
+        body: "La energía de hoy es esperanza. Observa una estrella (real o en imagen) y pide una señal clara para este mes. Anota la primera idea, palabra o símbolo que te llegue: ése es tu mensaje." },
+
+      { id: 4,  title: "Pequeño Hechizo — Día 4",     type: "Hechizo",    icon: "🧪", orb: "ritual",
+        short: "Hechizo de calma",
+        body: "Escribe en un papel aquello que te inquieta. Colócalo bajo un vaso de agua durante una hora. Después, tira el agua a la tierra o al fregadero, visualizando cómo se disuelve la preocupación." },
+
+      { id: 5,  title: "Manualidad — Día 5",          type: "Manualidad", icon: "🧵", orb: "manualidad",
+        short: "Crea un amuleto de invierno",
+        body: "Haz un pequeño saquito de tela. Introduce romero (limpieza), sal (protección) y un cuarzo blanco o piedra clara (claridad). Ciérralo con un lazo y llévalo contigo durante diciembre como talismán." },
+
+      { id: 6,  title: "Meditación — Día 6",          type: "Audio",      icon: "💨", orb: "audio",
+        short: "5 minutos de liberación",
+        body: "Haz una pausa de 5 minutos. Respira profundamente 7 veces. En cada exhalación imagina cómo expulsas peso del pasado. Visualiza un suave humo gris saliendo de ti y transformándose en luz." },
+
+      { id: 7,  title: "Ritual — Día 7",              type: "Ritual",     icon: "🌫️", orb: "ritual",
+        short: "Ritual del incienso",
+        body: "Enciende incienso de sándalo, pino o mirra. Observa el humo elevándose y visualiza cómo se lleva la energía densa de tu hogar. Recorre la casa con el incienso en sentido de las agujas del reloj." },
+
+      { id: 8,  title: "Afirmación — Día 8",          type: "Afirmación", icon: "💛", orb: "afirmacion",
+        short: "Abrazo al merecimiento",
+        body: "Afirmación del día: «Soy merecedora de oportunidades, abundancia y bienestar. Me abro a recibir con amor». Escríbela en un papel y colócalo en un lugar visible." },
+
+      { id: 9,  title: "Oráculo — Día 9",             type: "Oráculo",    icon: "🔮", orb: "oraculo",
+        short: "Carta de intuición",
+        body: "Imagina que recibes una carta mágica con un símbolo: luna, sol o estrella. Elige uno sin pensarlo. Luna: escucha tus emociones. Sol: actúa con confianza. Estrella: confía en tu guía interna." },
+
+      { id: 10, title: "Hechizo — Día 10",            type: "Hechizo",    icon: "🌊", orb: "ritual",
+        short: "Hechizo de paz",
+        body: "Coloca sal marina en un cuenco pequeño. Pon tus manos encima y di: «La paz me encuentra, me abraza y se queda». Después, tira la sal por el fregadero con agua, visualizando calma entrando en tu vida." },
+
+      { id: 11, title: "Manualidad — Día 11",         type: "Manualidad", icon: "🌿", orb: "manualidad",
+        short: "Corona mística",
+        body: "Crea una mini corona con ramitas, cuerda y, si tienes, una hoja de laurel. Cuelga la corona en la entrada o cerca de una ventana para llamar a la buena suerte y la protección." },
+
+      { id: 12, title: "Audio — Día 12",              type: "Audio",      icon: "🌙", orb: "audio",
+        short: "Respiración lunar",
+        body: "Practica la respiración 4–4–6: inhala contando 4, mantén 4 segundos y exhala en 6, imaginando una luna plateada sobre ti que te llena de calma suave. Repite varias veces." },
+
+      { id: 13, title: "Ritual — Día 13",             type: "Ritual",     icon: "💧", orb: "ritual",
+        short: "Ritual del agua",
+        body: "Llena un vaso con agua. Pon tus manos alrededor y transmite una intención clara: paz, salud, abundancia… Bebe el agua lentamente, sintiendo que esa energía entra en tu cuerpo." },
+
+      { id: 14, title: "Afirmación — Día 14",         type: "Afirmación", icon: "🚶‍♀️", orb: "afirmacion",
+        short: "Yo avanzo",
+        body: "Afirmación del día: «Me abro a nuevos ciclos con confianza. Avanzo, aunque sea paso a paso, hacia una vida más alineada conmigo». Repítela cuando sientas dudas." },
+
+      { id: 15, title: "Oráculo — Día 15",            type: "Oráculo",    icon: "🌌", orb: "oraculo",
+        short: "Mensaje del espíritu del invierno",
+        body: "Cierra los ojos y elige una palabra: calma, introspección, guía o renacimiento. La palabra que elijas es el consejo del invierno para ti hoy. Escríbela y manténla presente." },
+
+      { id: 16, title: "Hechizo — Día 16",            type: "Hechizo",    icon: "🙏", orb: "ritual",
+        short: "Hechizo de gratitud",
+        body: "Escribe 3 cosas que agradeces del año. Enróllalo y quémalo (siempre en un recipiente seguro) o guárdalo en un frasco. La gratitud multiplica la magia y abre espacio para nuevas bendiciones." },
+
+      { id: 17, title: "Manualidad — Día 17",         type: "Manualidad", icon: "🧪", orb: "manualidad",
+        short: "Botella de intenciones",
+        body: "Llena una mini botella o frasquito con purpurina, pétalos secos y un papel con un deseo escrito muy breve. Ciérrala y colócala en tu altar o mesilla como recordatorio de tu intención." },
+
+      { id: 18, title: "Audio — Día 18",              type: "Audio",      icon: "🌳", orb: "audio",
+        short: "Meditación de raíces",
+        body: "Siéntate cómoda y visualiza raíces de luz que salen de tus pies y te conectan con la tierra. Siente la estabilidad bajo ti. Repite mentalmente: «Estoy enraizada, segura y presente»." },
+
+      { id: 19, title: "Ritual — Día 19",             type: "Ritual",     icon: "🔆", orb: "ritual",
+        short: "Ritual de claridad",
+        body: "Enciende una vela y obsérvala en silencio unos minutos. Permite que tu mente muestre aquello que necesitas soltar o aclarar. Si te nace, escríbelo en un papel para trabajarlo más adelante." },
+
+      { id: 20, title: "Afirmación — Día 20",         type: "Afirmación", icon: "🌟", orb: "afirmacion",
+        short: "Soy luz",
+        body: "Afirmación del día: «Mi energía ilumina cada espacio que habito. Soy luz, incluso en los días grises». Repítela frente al espejo si te sientes cómoda." },
+
+      { id: 21, title: "Oráculo — Día 21",            type: "Oráculo",    icon: "☀️", orb: "oraculo",
+        short: "Portal del solsticio",
+        body: "Este día es un portal de renacer. Pregúntate: «¿Qué ciclo cierro hoy y cuál quiero abrir?». Escribe una frase de cierre y una de apertura. Guárdalas en tu altar o lugar especial." },
+
+      { id: 22, title: "Hechizo — Día 22",            type: "Hechizo",    icon: "🪙", orb: "ritual",
+        short: "Hechizo de abundancia",
+        body: "Coloca una moneda limpia junto a una vela dorada o blanca. Di: «La prosperidad fluye hacia mí de forma equilibrada y amorosa». Deja la vela encendida un rato, siempre bajo supervisión." },
+
+      { id: 23, title: "Manualidad — Día 23",         type: "Manualidad", icon: "🌙", orb: "manualidad",
+        short: "Guirnalda lunar",
+        body: "Recorta lunas en cartón o cartulina y píntalas en tonos plateados o blancos. Cuélgalas con hilo sobre una ventana o en un rincón especial. Cada luna representa un deseo para el próximo año." },
+
+      { id: 24, title: "Ritual de Cierre — Día 24",   type: "Ritual",     icon: "🎇", orb: "ritual",
+        short: "Celebración y cierre",
+        body: "Enciende varias velas (si puedes, en tonos blanco y dorado). Agradece en voz alta todo lo vivido este mes y este año. Escribe una intención para el nuevo ciclo y guárdala donde puedas leerla cuando lo necesites." }
     ];
 
     const LS_DONE = "calendario_mistico_done_v1";
     const done = JSON.parse(localStorage.getItem(LS_DONE) || "{}");
 
     const grid = document.getElementById("grid");
+
+    function orbClass(item) {
+      switch (item.type) {
+        case "Ritual": return "orb-ritual";
+        case "Hechizo": return "orb-ritual";
+        case "Afirmación": return "orb-afirmacion";
+        case "Oráculo": return "orb-oraculo";
+        case "Manualidad": return "orb-manualidad";
+        case "Audio": return "orb-audio";
+        default: return "orb-ritual";
+      }
+    }
 
     function renderGrid() {
       grid.innerHTML = "";
@@ -294,19 +428,25 @@
         short.className = "short";
         short.textContent = item.short;
 
-        const img = document.createElement("img");
-        img.className = "imgdecor";
-        img.src = item.image;
-        img.alt = "Imagen mística del día " + item.id;
+        const orb = document.createElement("div");
+        orb.className = "icon-orb " + orbClass(item);
+        const iconSpan = document.createElement("span");
+        iconSpan.textContent = item.icon;
+        orb.appendChild(iconSpan);
 
         card.appendChild(head);
         card.appendChild(short);
-        card.appendChild(img);
+        card.appendChild(orb);
 
         if (done[item.id]) {
           const badge = document.createElement("div");
           badge.className = "done-badge";
-          badge.textContent = "Hecho";
+          const check = document.createElement("span");
+          check.textContent = "✓";
+          const txt = document.createElement("span");
+          txt.textContent = "Hecho";
+          badge.appendChild(check);
+          badge.appendChild(txt);
           card.appendChild(badge);
         }
 
@@ -335,10 +475,11 @@
       const top = document.createElement("div");
       top.className = "top";
 
-      const img = document.createElement("img");
-      img.src = item.image;
-      img.alt = item.title;
-      img.className = "main-image";
+      const visual = document.createElement("div");
+      visual.className = "modal-visual";
+      const icon = document.createElement("span");
+      icon.textContent = item.icon;
+      visual.appendChild(icon);
 
       const info = document.createElement("div");
 
@@ -380,7 +521,7 @@
       info.appendChild(markWrap);
       info.appendChild(note);
 
-      top.appendChild(img);
+      top.appendChild(visual);
       top.appendChild(info);
 
       modal.appendChild(closeBtn);
